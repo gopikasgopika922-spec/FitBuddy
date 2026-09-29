@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy — Admin Dashboard{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <p class="eyebrow">ADMIN DASHBOARD</p>
+    <h1>Users and generated plans</h1>
+    <p>Review original and feedback-updated plans stored in SQLite.</p>
+</section>
+
+<div class="table-wrap card">
+<table>
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Profile</th>
+            <th>Original plan</th>
+            <th>Updated plan</th>
+            <th>Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+        <tr>
+            <td><strong>{{ row.user.username }}</strong><br><small>{{ row.user.user_id }}</small></td>
+            <td>{{ row.user.age }} yrs<br>{{ row.user.weight }} kg<br>{{ row.user.goal }}<br>{{ row.user.intensity }}</td>
+            <td>
+                {% if row.plan %}
+                <details><summary>View</summary><pre class="mini-plan">{{ row.plan.original_plan }}</pre></details>
+                {% else %}—{% endif %}
+            </td>
+            <td>
+                {% if row.plan and row.plan.updated_plan %}
+                <details><summary>View</summary><pre class="mini-plan">{{ row.plan.updated_plan }}</pre></details>
+                {% else %}—{% endif %}
+            </td>
+            <td>{{ row.plan.feedback if row.plan and row.plan.feedback else "—" }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5">No users yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

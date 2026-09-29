@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy — Generate Your Plan{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow">AI FITNESS PLANNER</p>
+        <h1>Build a routine that fits your goal.</h1>
+        <p>Generate a personalized 7-day workout plan and a practical nutrition or recovery tip.</p>
+    </div>
+
+    <form class="card form-card" action="/generate-workout" method="post">
+        <h2>Your profile</h2>
+
+        {% if error %}
+        <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        <label>
+            Name
+            <input name="username" required maxlength="120" placeholder="Alex">
+        </label>
+
+        <label>
+            User ID
+            <input name="user_id" required maxlength="100" pattern="[A-Za-z0-9_-]+" placeholder="alex-001">
+            <small>Use the same ID later to submit feedback.</small>
+        </label>
+
+        <div class="grid-2">
+            <label>
+                Age
+                <input name="age" type="number" min="13" max="100" required>
+            </label>
+            <label>
+                Weight (kg)
+                <input name="weight" type="number" min="20.1" max="500" step="0.1" required>
+            </label>
+        </div>
+
+        <label>
+            Fitness goal
+            <select name="goal" required>
+                <option value="weight loss">Weight loss</option>
+                <option value="muscle gain">Muscle gain</option>
+                <option value="general wellness">General wellness</option>
+                <option value="flexibility">Flexibility</option>
+                <option value="endurance">Endurance</option>
+            </select>
+        </label>
+
+        <label>
+            Workout intensity
+            <select name="intensity" required>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+            </select>
+        </label>
+
+        <button class="button primary" type="submit">Generate 7-Day Plan</button>
+        <p class="helper">For demo/testing without Gemini, set <code>DEMO_MODE=true</code> in <code>.env</code>.</p>
+    </form>
+</section>
+{% endblock %}

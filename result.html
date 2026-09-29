@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy — Your Plan{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <p class="eyebrow">YOUR FITBUDDY PLAN</p>
+    <h1>{{ user.username }}'s 7-day routine</h1>
+    {% if message %}<div class="alert success">{{ message }}</div>{% endif %}
+</section>
+
+<section class="profile-grid">
+    <div class="stat"><span>User ID</span><strong>{{ user.user_id }}</strong></div>
+    <div class="stat"><span>Age</span><strong>{{ user.age }}</strong></div>
+    <div class="stat"><span>Weight</span><strong>{{ user.weight }} kg</strong></div>
+    <div class="stat"><span>Goal</span><strong>{{ user.goal }}</strong></div>
+    <div class="stat"><span>Intensity</span><strong>{{ user.intensity }}</strong></div>
+</section>
+
+<div class="content-grid">
+    <section class="card plan-card">
+        <div class="section-title">
+            <h2>{% if plan.updated_plan %}Updated workout plan{% else %}Workout plan{% endif %}</h2>
+            {% if plan.updated_plan %}<span class="pill">Updated</span>{% endif %}
+        </div>
+        <pre class="plan">{{ current_plan }}</pre>
+    </section>
+
+    <aside class="card tip-card">
+        <h2>Nutrition / Recovery Tip</h2>
+        <p>{{ plan.nutrition_tip }}</p>
+        <hr>
+        <p class="small">Plans are general wellness guidance. Adjust activity to your abilities and seek professional advice when appropriate.</p>
+    </aside>
+</div>
+
+<section class="card feedback-card">
+    <h2>Refine your plan</h2>
+    <p>Tell FitBuddy what you want changed, such as more cardio, less volume, or an additional recovery day.</p>
+    <form action="/submit-feedback" method="post">
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <label>
+            Feedback
+            <textarea name="feedback" maxlength="2000" minlength="3" required placeholder="Example: Add more cardio and make Day 6 lower intensity."></textarea>
+        </label>
+        <button class="button primary" type="submit">Update Plan with AI</button>
+    </form>
+</section>
+
+{% if plan.updated_plan %}
+<section class="card">
+    <h2>Original plan</h2>
+    <details>
+        <summary>Show original plan</summary>
+        <pre class="plan">{{ plan.original_plan }}</pre>
+    </details>
+</section>
+{% endif %}
+
+<a class="button secondary" href="/">Create another plan</a>
+{% endblock %}

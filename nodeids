@@ -1,0 +1,8 @@
+[
+  "tests/test_app.py::test_admin_api_requires_auth",
+  "tests/test_app.py::test_feedback_update",
+  "tests/test_app.py::test_generate_and_lookup",
+  "tests/test_app.py::test_generation_uses_demo_fallback_when_gemini_quota_is_exhausted",
+  "tests/test_app.py::test_health",
+  "tests/test_app.py::test_homepage"
+]
